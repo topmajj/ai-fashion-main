@@ -354,7 +354,8 @@ function CreditsContent() {
                     {t("credits.payWithStripe")}
                   </Button>
 
-                  {user && (
+                  {/* Fatora button is hidden now */}
+                  {false && user && (
                     <FatoraCheckoutButton
                       userId={user.id}
                       userEmail={user.email || ""}
