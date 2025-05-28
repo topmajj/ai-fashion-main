@@ -1,0 +1,672 @@
+export type Database = {
+  public: {
+    Tables: {
+      daily_stats: {
+        Row: {
+          id: string
+          date: string
+          active_users: number
+          revenue: number
+          new_subscriptions: number
+          avg_session_duration: number
+          created_at: string
+        }
+        Insert: {
+          date: string
+          active_users?: number
+          revenue?: number
+          new_subscriptions?: number
+          avg_session_duration?: number
+        }
+        Update: {
+          id?: string
+          date?: string
+          active_users?: number
+          revenue?: number
+          new_subscriptions?: number
+          avg_session_duration?: number
+        }
+        Relationships: []
+      }
+      generated_images: {
+        Row: {
+          id: string
+          user_id: string
+          image_url: string | null
+          prompt: string | null
+          created_at: string
+          status: string
+          original_image: string | null
+          mask_image: string | null
+          type: string | null
+          error_message: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          image_url?: string | null
+          prompt?: string | null
+          created_at?: string
+          status: string
+          original_image?: string | null
+          mask_image?: string | null
+          type?: string | null
+          error_message?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          image_url?: string | null
+          prompt?: string | null
+          created_at?: string
+          status?: string
+          original_image?: string | null
+          mask_image?: string | null
+          type?: string | null
+          error_message?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generated_images_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      users: {
+        Row: {
+          id: string
+          email: string
+          name: string | null
+          avatar_url: string | null
+          credits: number
+          created_at: string
+          last_login: string | null
+          is_admin: boolean | null
+        }
+        Insert: {
+          id?: string
+          email: string
+          name?: string | null
+          avatar_url?: string | null
+          credits?: number
+          created_at?: string
+          last_login?: string | null
+          is_admin?: boolean | null
+        }
+        Update: {
+          id?: string
+          email?: string
+          name?: string | null
+          avatar_url?: string | null
+          credits?: number
+          created_at?: string
+          last_login?: string | null
+          is_admin?: boolean | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          id: string
+          body_type: string | null
+          skin_tone: string | null
+          hair_color: string | null
+          favorite_colors: string[] | null
+          style_preferences: string[] | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          body_type?: string | null
+          skin_tone?: string | null
+          hair_color?: string | null
+          favorite_colors?: string[] | null
+          style_preferences?: string[] | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          body_type?: string | null
+          skin_tone?: string | null
+          hair_color?: string | null
+          favorite_colors?: string[] | null
+          style_preferences?: string[] | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      user_settings: {
+        Row: {
+          id: string
+          notifications_enabled: boolean | null
+          newsletter_subscribed: boolean | null
+          language: string | null
+          theme: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          notifications_enabled?: boolean | null
+          newsletter_subscribed?: boolean | null
+          language?: string | null
+          theme?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          notifications_enabled?: boolean | null
+          newsletter_subscribed?: boolean | null
+          language?: string | null
+          theme?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_settings_id_fkey"
+            columns: ["id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      transactions: {
+        Row: {
+          id: string
+          user_id: string
+          amount: number
+          credits: number
+          status: string
+          stripe_session_id: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          amount: number
+          credits: number
+          status: string
+          stripe_session_id?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          amount?: number
+          credits?: number
+          status?: string
+          stripe_session_id?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      tool_usage: {
+        Row: {
+          id: string
+          date: string
+          tool_name: string
+          usage_count: number
+          created_at: string
+        }
+        Insert: {
+          date: string
+          tool_name: string
+          usage_count?: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          date?: string
+          tool_name?: string
+          usage_count?: number
+          created_at?: string
+        }
+        Relationships: []
+      }
+      product_descriptions: {
+        Row: {
+          id: string
+          user_id: string
+          product_name: string
+          product_features: string
+          target_audience: string | null
+          description: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          product_name: string
+          product_features: string
+          target_audience: string | null
+          description: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          product_name?: string
+          product_features?: string
+          target_audience?: string | null
+          description?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_descriptions_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      generated_titles: {
+        Row: {
+          id: string
+          user_id: string
+          topic: string
+          keywords: string | null
+          brevity: string
+          titles: string[]
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          topic: string
+          keywords?: string | null
+          brevity: string
+          titles: string[]
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          topic?: string
+          keywords?: string | null
+          brevity?: string
+          titles?: string[]
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generated_titles_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      text_summaries: {
+        Row: {
+          id: string
+          user_id: string
+          original_text: string
+          summary: string
+          length: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          original_text: string
+          summary: string
+          length: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          original_text?: string
+          summary?: string
+          length?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "text_summaries_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      pas_frameworks: {
+        Row: {
+          id: string
+          user_id: string
+          problem: string
+          target_audience: string | null
+          solution: string
+          generated_content: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          problem: string
+          target_audience?: string | null
+          solution: string
+          generated_content: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          problem?: string
+          target_audience?: string | null
+          solution?: string
+          generated_content?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pas_frameworks_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      blog_sections: {
+        Row: {
+          id: string
+          user_id: string
+          topic: string
+          keywords: string | null
+          tone: string | null
+          content: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          topic: string
+          keywords?: string | null
+          tone?: string | null
+          content: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          topic?: string
+          keywords?: string | null
+          tone?: string | null
+          content?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_sections_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      blog_post_ideas: {
+        Row: {
+          id: string
+          user_id: string
+          topic: string
+          target_audience: string | null
+          number_of_ideas: number
+          ideas: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          topic: string
+          target_audience?: string | null
+          number_of_ideas: number
+          ideas: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          topic?: string
+          target_audience?: string | null
+          number_of_ideas?: number
+          ideas?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_post_ideas_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      blog_intros: {
+        Row: {
+          id: string
+          user_id: string
+          blog_title: string | null
+          topic: string | null
+          title: string | null
+          content: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          blog_title?: string | null
+          topic?: string | null
+          title?: string | null
+          content?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          blog_title?: string | null
+          topic?: string | null
+          title?: string | null
+          content?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_intros_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      facebook_ads: {
+        Row: {
+          id: string
+          user_id: string
+          created_at: string
+          prompt: string | null
+          content: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          created_at?: string
+          prompt?: string | null
+          content?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          created_at?: string
+          prompt?: string | null
+          content?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "facebook_ads_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      instagram_captions: {
+        Row: {
+          id: string
+          user_id: string
+          created_at: string
+          topic: string
+          mood: string | null
+          caption: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          created_at?: string
+          topic: string
+          mood?: string | null
+          caption: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          created_at?: string
+          topic?: string
+          mood?: string | null
+          caption?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "instagram_captions_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      instagram_hashtags: {
+        Row: {
+          id: string
+          user_id: string
+          created_at: string
+          topic: string
+          niche: string | null
+          number_of_hashtags: number
+          hashtags: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          created_at?: string
+          topic: string
+          niche?: string | null
+          number_of_hashtags: number
+          hashtags: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          created_at?: string
+          topic?: string
+          niche?: string | null
+          number_of_hashtags?: number
+          hashtags?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "instagram_hashtags_user_id_fkey"
+            columns: ["user_id"]
+            isOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      add_credits_to_all_users: {
+        Args: {
+          credit_amount: number
+        }
+        Returns: undefined
+      }
+      add_credits: {
+        Args: {
+          user_id: string
+          credit_amount: number
+        }
+        Returns: undefined
+      }
+      deduct_credit: {
+        Args: {
+          user_id: string
+          amount: number
+        }
+        Returns: {
+          credits: number
+        } | null
+      }
+      increment_daily_stats: {
+        Args: {
+          p_date: string
+          p_active_users: number
+          p_revenue: number
+          p_new_subscriptions: number
+          p_session_duration: number
+        }
+        Returns: undefined
+      }
+      increment_tool_usage: {
+        Args: {
+          p_date: string
+          p_tool_name: string
+          p_usage_count: number
+        }
+        Returns: undefined
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
